@@ -11,9 +11,9 @@ function Camera:_getFrames()
   self.frames = {}
 
   for x=1, 3 do
-    local filename = 'images/' .. x .. '.jpg'
+    local filename = 'app/images/' .. x .. '.jpg'
     local file = io.open(filename, 'rb')
-    self.frames.insert(file:read('*all'))
+    table.insert(self.frames, file:read('*all'))
   end
 
   return self.frames
