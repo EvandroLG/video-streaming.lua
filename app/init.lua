@@ -8,17 +8,25 @@ local videoFeed = function(req, rep)
   local isIndex = string.find(req.path, '/video/') == nil
 
   if isIndex then
-    print('index')
-    rep:addHeader('Content-Type', 'text/html'):write('<img src="http://localhost:9090/video/">')
+    local index = table.concat({
+      '<!doctype html>',
+      '<html>',
+        '<head></head>',
+        '<body>',
+          '<img src="http://localhost:9090/video/"',
+        '</body>',
+      '</html>'
+    }, '')
+
+    rep:addHeader('Content-Type', 'text/html'):write(index)
+
     return nil
   end
 
-  print('video-feed')
   rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
 
-  for index=1, 3 do
-    local frame = Camera:getFrame(index)
-    print(index)
+  for i=1, 3 do
+    local frame = Camera:getFrame(i)
     local src = table.concat({
       '--frame\r\n',
       'Content-Type: image/jpeg\r\n\r\n' .. frame .. '\r\n'

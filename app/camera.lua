@@ -23,7 +23,7 @@ function Camera:getFrame(index)
   if not self.frames then
     self:_getFrames()
   end
-  print(self.frames[index])
+
   return self.frames[index]
 end
 
