@@ -6,9 +6,10 @@ local server = Pegasus:new()
 
 local videoFeed = function(req, rep)
   local isIndex = string.find(req.path, '/') ~= nil
+
   if isIndex then
     print('index')
-    rep:addHeader('Content-Type', 'text/html'):write('<img src="http://location:9090/video-feed/">')
+    rep:addHeader('Content-Type', 'text/html'):write('<img src="http://localhost:9090/video-feed/">')
     return nil
   end
 
