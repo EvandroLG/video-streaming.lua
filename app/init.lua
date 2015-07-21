@@ -3,7 +3,6 @@ local Camera = require 'app/camera'
 
 local camera = Camera:new()
 local server = Pegasus:new()
-local server = Pegasus:new()
 
 local videoFeed = function(req, rep)
   local isIndex = string.find(req.path, '/') ~= nil
