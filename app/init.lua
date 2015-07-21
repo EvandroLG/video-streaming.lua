@@ -16,7 +16,7 @@ local videoFeed = function(req, rep)
   print('video-feed')
   rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
 
-  for index=2, 3 do
+  for index=1, 3 do
     local frame = Camera:getFrame(index)
     print(index)
     local src = table.concat({
