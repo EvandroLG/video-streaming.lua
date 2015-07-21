@@ -3,15 +3,17 @@ local Camera = require 'app/camera'
 
 local camera = Camera:new()
 local server = Pegasus:new()
-local server = Pegasus:new({
-  port = '9090',
-  location = '/app/'
-})
+local server = Pegasus:new()
 
 local videoFeed = function(req, rep)
-  local isImage = string.find(req.path, 'images') ~= nil
-  if isImage then return nil end
+  local isIndex = string.find(req.path, '/') ~= nil
+  if isIndex then
+    print('index')
+    rep:addHeader('Content-Type', 'text/html'):write('<img src="http://location:9090/video-feed/">')
+    return nil
+  end
 
+  print('video-feed')
   rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
 
   for i=1, 3 do
@@ -21,7 +23,7 @@ local videoFeed = function(req, rep)
       'Content-Type: image/jpeg\r\n\r\n' .. frame .. '\r\n'
     }, '')
     
-    rep:write('<img src"' .. src .. '">', true)
+    rep:write(src, true)
   end
 end
 
