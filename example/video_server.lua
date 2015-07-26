@@ -1,6 +1,6 @@
-local Jiray = require 'app/init'
+local Streaming = require 'app/init'
 
-local serverVideo = Jiray:new({
+local serverVideo = Streaming:new({
   port='8080',
   dir='example/images/'
 })

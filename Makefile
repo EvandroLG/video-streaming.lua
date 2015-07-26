@@ -5,7 +5,7 @@ run_example:
 	lua example/server.lua
 
 test:
-	busted test.lua
+	busted
 
 install_dependencies:
 	luarocks install pegasus

@@ -2,21 +2,20 @@ local Pegasus = require 'pegasus'
 local Camera = require 'app/camera'
 local socket = require 'socket'
 
-local Jiray = {}
+local Streaming = {}
 
-function Jiray:new(params)
+function Streaming:new(params)
   local obj = {}
   self.__index = self
-  self.dir = params.dir
-  self.camera = Camera:new(self.dir)
+  self.camera = Camera:new(params.dir or './')
   self.server = Pegasus:new({
-    port = params.port
+    port = params.port or '9090'
   })
 
   return setmetatable(obj, self)
 end
 
-function Jiray:start()
+function Streaming:start()
   self.server:start(function(req, rep)
     local isVideo = string.find(req.path or '', '/video_streaming/') ~= nil
     if not isVideo then return nil end
@@ -37,4 +36,4 @@ function Jiray:start()
   end)
 end
 
-return Jiray
+return Streaming
