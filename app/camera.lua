@@ -1,8 +1,12 @@
+local lfs = require 'lfs'
+local mimetypes = require 'mimetypes'
+
 local Camera = {}
 
-function Camera:new()
+function Camera:new(dir)
   local obj = {}
   self.__index = self
+  self.dir = dir
 
   return setmetatable(obj, self)
 end
@@ -10,11 +14,12 @@ end
 function Camera:_getFrames()
   self.frames = {}
 
-  for x=1, 3 do
-    local filename = 'app/images/' .. x .. '.jpg'
-    local file = io.open(filename, 'rb')
-    table.insert(self.frames, file:read('*all'))
-  end
+  for fname in lfs.dir(self.dir) do
+    if mimetypes.guess(fname) == 'image/jpeg' then 
+      local file = io.open(self.dir .. fname, 'rb')
+      table.insert(self.frames, file:read('*all'))
+    end
+  end 
 
   return self.frames
 end

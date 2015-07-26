@@ -1,39 +1,40 @@
 local Pegasus = require 'pegasus'
 local Camera = require 'app/camera'
 
-local camera = Camera:new()
-local server = Pegasus:new()
+local Jiray = {}
 
-local videoFeed = function(req, rep)
-  local isIndex = string.find(req.path, '/video/') == nil
+function Jiray:new(params)
+  local obj = {}
+  self.__index = self
+  self.dir = params.dir
+  self.camera = Camera:new(dir)
+  self.server = Pegasus:new({
+    port = params.port
+  })
 
-  if isIndex then
-    local index = table.concat({
-      '<!doctype html>',
-      '<html>',
-        '<head></head>',
-        '<body>',
-          '<img src="http://localhost:9090/video/"',
-        '</body>',
-      '</html>'
-    }, '')
-
-    rep:addHeader('Content-Type', 'text/html'):write(index)
-
-    return nil
-  end
-
-  rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
-
-  for i=1, 3 do
-    local frame = Camera:getFrame(i)
-    local src = table.concat({
-      '--frame\r\n',
-      'Content-Type: image/jpeg\r\n\r\n' .. frame .. '\r\n'
-    }, '')
-    
-    rep:write(src, true)
-  end
+  return setmetatable(obj, self)
 end
 
-server:start(videoFeed)
+function Jiray:start()
+  self.server:start(function(req, rep)
+    local isVideo = string.find(req.path, '/video/') ~= nil
+    if not isVideo then return nil end
+
+    rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
+
+    local i = 1
+
+    while Camera:getFrame(i) ~= nil do
+      local frame = Camera:getFrame(i)
+      i = i + 1
+      local src = table.concat({
+        '--frame\r\n',
+        'Content-Type: image/jpeg\r\n\r\n' .. frame .. '\r\n'
+      }, '')
+      
+      rep:write(src, true)
+    end
+  end)
+end
+
+return Jiray

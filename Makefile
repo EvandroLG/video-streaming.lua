@@ -1,7 +1,7 @@
 .SILENT:
 
 run:
-	lua app/init.lua
+	lua app/test.lua
 
 test:
 	busted test.lua
