@@ -9,7 +9,7 @@ server:start(function(req, rep)
     '<head>',
     '<title></title>',
     '</head>',
-    '<body><img src="http://localhost:8080/video/"></body>',
+    '<body><img src="http://localhost:8080/video_streaming/"></body>',
     '</html>'
   }, '')
 

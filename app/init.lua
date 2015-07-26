@@ -1,5 +1,6 @@
 local Pegasus = require 'pegasus'
 local Camera = require 'app/camera'
+local socket = require 'socket'
 
 local Jiray = {}
 
@@ -7,7 +8,7 @@ function Jiray:new(params)
   local obj = {}
   self.__index = self
   self.dir = params.dir
-  self.camera = Camera:new(dir)
+  self.camera = Camera:new(self.dir)
   self.server = Pegasus:new({
     port = params.port
   })
@@ -17,13 +18,12 @@ end
 
 function Jiray:start()
   self.server:start(function(req, rep)
-    local isVideo = string.find(req.path, '/video/') ~= nil
+    local isVideo = string.find(req.path or '', '/video_streaming/') ~= nil
     if not isVideo then return nil end
 
     rep:addHeader('Content-Type', 'multipart/x-mixed-replace; boundary=frame')
 
     local i = 1
-
     while Camera:getFrame(i) ~= nil do
       local frame = Camera:getFrame(i)
       i = i + 1
