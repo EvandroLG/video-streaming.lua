@@ -1,4 +1,4 @@
-local Streaming = require 'app/init'
+local Streaming = require 'video_streaming.init'
 
 describe('streaming', function()
   function verifyMethod(method)

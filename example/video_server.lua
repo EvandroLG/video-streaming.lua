@@ -1,4 +1,4 @@
-local Streaming = require 'app/init'
+local Streaming = require 'video_streaming.init'
 
 local serverVideo = Streaming:new({
   port='8080',

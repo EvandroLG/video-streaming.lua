@@ -1,5 +1,5 @@
 local Pegasus = require 'pegasus'
-local Camera = require 'app/camera'
+local Camera = require 'video_streaming.camera'
 local socket = require 'socket'
 
 local Streaming = {}

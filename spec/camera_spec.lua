@@ -1,4 +1,4 @@
-local Camera = require 'app/camera'
+local Camera = require 'video_streaming.camera'
 
 function tableLength(t)
   local count = 0
