@@ -23,6 +23,6 @@ build = {
   type = "builtin",
   modules = {
     ['video_streaming'] = 'video_streaming/init.lua',
-    ['pegasus.handler']  = 'video_streaming/camera.lua',
+    ['video_streaming.camera']  = 'video_streaming/camera.lua',
   }
 }
