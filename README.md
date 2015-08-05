@@ -11,7 +11,7 @@ $ luarocks install video_streaming
 You need to create a instance of Streaming, pass a port and a path to the directory where the images will served:
 
 ```lua
-local Streaming = require 'video_streaming.init'
+local Streaming = require 'video_streaming'
 
 local serverVideo = Streaming:new({
   port='8080',
