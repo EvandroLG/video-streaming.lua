@@ -1,4 +1,4 @@
-package = 'pegasus'
+package = 'video_streaming'
 version = '0.1.0-1'
 
 source = {
